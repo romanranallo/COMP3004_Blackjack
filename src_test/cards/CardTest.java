@@ -20,6 +20,9 @@ public class CardTest {
 		c = new Card("HJ");
 		assertTrue(c.getSuit.equals("H") && c.getValue() == 10);
 		
+		c = new Card("C10");
+		assertTrue(c.getSuit().equals("C") && c.getValue() == 10);
+		
 		c = new Card("DA");
 		// Ace should default to 11
 		assertTrue(c.getSuit().equals("D") && c.getValue() == 11);
