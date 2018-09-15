@@ -12,13 +12,13 @@ public class CardTest {
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 2);
 		
 		c = new Card("SK");
-		assertTrue(c.getSuit.equals("S") && c.getValue() == 10);
+		assertTrue(c.getSuit().equals("S") && c.getValue() == 10);
 		
 		c = new Card("CQ");
-		assertTrue(c.getSuit.equals("C") && c.getValue() == 10);
+		assertTrue(c.getSuit().equals("C") && c.getValue() == 10);
 		
 		c = new Card("HJ");
-		assertTrue(c.getSuit.equals("H") && c.getValue() == 10);
+		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
 		
 		c = new Card("C10");
 		assertTrue(c.getSuit().equals("C") && c.getValue() == 10);
