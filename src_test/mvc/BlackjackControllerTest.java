@@ -26,4 +26,34 @@ public class BlackjackControllerTest {
 		assertNull(controller.getModel());
 	}
 
+	
+	@Test
+	public void testUserInputHit() {
+		BlackjackController controller = new BlackjackController();
+		controller.setModel(new ConsoleBlackjackGame());
+		assertEquals(0, controller.getModel().getUser().getHand().size());
+		controller.hitOrStand("h");
+		assertEquals(1, controller.getModel().getUser().getHand().size());
+	}
+	
+	@Test
+	public void testUserInputStand() {
+		BlackjackController controller = new BlackjackController();
+		controller.setModel(new ConsoleBlackjackGame());
+		assertEquals(0, controller.getModel().getUser().getHand().size());
+		controller.hitOrStand("s");
+		assertEquals(0, controller.getModel().getUser().getHand().size());
+		assertEquals(controller.getGameStatus(), Constants.DEALER_TURN);
+	}
+	
+	@Test
+	public void testBadUserInputHitOrStand() {
+		BlackjackController controller = new BlackjackController();
+		controller.setModel(new ConsoleBlackjackGame());
+		assertEquals(0, controller.getModel().getUser().getHand().size());
+		controller.hitOrStand("sdfsdfkjh");
+		assertEquals(0, controller.getModel().getUser().getHand().size());
+		assertEquals(controller.getGameStatus(), Constants.PLAYER_TURN);
+	}
+	
 }
