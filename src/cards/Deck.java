@@ -10,10 +10,10 @@ public class Deck {
 	 */
 	public Deck() {
 
-		deck.add(new Card("SA"));
-		deck.add(new Card("CA"));
-		deck.add(new Card("HA"));
-		deck.add(new Card("DA"));
+		deck.add(new Ace("SA"));
+		deck.add(new Ace("CA"));
+		deck.add(new Ace("HA"));
+		deck.add(new Ace("DA"));
 		
 		for (int i = 2; i <= 10; i++) {
 			deck.add(new Card("S" + i));
