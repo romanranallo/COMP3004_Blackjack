@@ -1,14 +1,8 @@
 package mvc;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import cards.Ace;
 import cards.Card;
-
-import org.junit.After;
 import org.junit.Before;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -203,6 +197,28 @@ public class BlackjackTest {
 		assertEquals(2, blackjack.getUser().getHand().size());
 		assertEquals(2, blackjack.getDealer().getHand().size());
 		assertTrue("h".equalsIgnoreCase(((FileBlackjackGame)blackjack).getHitOrStand()));
+	}
+	
+	@Test
+	public void testSplit() {
+		blackjack = new ConsoleBlackjackGame();
+		blackjack.getUser().addCard(Card.builder("DK"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		assertTrue(blackjack.canSplit(blackjack.getUser()));
+		
+		blackjack.getDealer().addCard(Card.builder("DA"));
+		blackjack.getDealer().addCard(Card.builder("SA"));
+		assertTrue(blackjack.canSplit(blackjack.getDealer()));
+		
+		blackjack = new ConsoleBlackjackGame();
+		blackjack.getUser().addCard(Card.builder("D6"));
+		blackjack.getUser().addCard(Card.builder("H6"));
+		assertTrue(blackjack.canSplit(blackjack.getUser()));
+		
+		blackjack.getDealer().addCard(Card.builder("S8"));
+		blackjack.getDealer().addCard(Card.builder("H3"));
+		assertFalse(blackjack.canSplit(blackjack.getUser()));
+		
 	}
 	
 }
