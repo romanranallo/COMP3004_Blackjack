@@ -1,5 +1,9 @@
 package mvc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import util.Constants;
 
 public class BlackjackController {
@@ -52,12 +56,11 @@ public class BlackjackController {
 		controller();
 	}
 	
-	private void getFile() {
-		
-	}
-	
-	public void readFile(String filename) {
-		model.getFile(filename);
+	public String[] readFile(String filename) throws FileNotFoundException {
+	    File file = new File(filename); 
+	    Scanner sc = new Scanner(file); 
+	    String fileInput = sc.nextLine();
+	    return fileInput.split(" ");
 	}
 	
 	public void setInputType(String input) {
@@ -67,9 +70,17 @@ public class BlackjackController {
 			this.consoleInput = true;
 		}
 		else if (input.equalsIgnoreCase("f")) {
-			model = new FileBlackjackGame();
+			String [] fileIn;
 			gameStatus = Constants.INITIAL_DEAL;
 			this.consoleInput = false;
+			try {
+				fileIn = readFile(view.promptUserForFile());
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;	// sadness
+			}
+			model = new FileBlackjackGame(fileIn);
 		}
 		else {
 			view.printErrorMessage();
@@ -83,19 +94,23 @@ public class BlackjackController {
 		if (model.isBlackjack()) {
 			view.printBlackjack(model.getWinner());
 			gameStatus = Constants.GAME_OVER;
-			controller();
 		}
-		gameStatus = Constants.PLAYER_TURN;
+		else {
+			gameStatus = Constants.PLAYER_TURN;
+		}
 		controller();
 	}
 	
 	public void playerTurn() {
 		while (gameStatus == Constants.PLAYER_TURN) {
-			hitOrStand(view.getPlayerDecision());
+			if (consoleInput)
+				hitOrStand(view.getPlayerDecision());
+			else {
+				hitOrStand(((FileBlackjackGame)model).getHitOrStand());
+			}
 		}
 		model.endPlayerTurn();
 		controller();
-		
 	}
 	
 	public void dealerTurn() {
@@ -105,6 +120,7 @@ public class BlackjackController {
 	
 	public void hitOrStand(String input) {
 		if (input.equalsIgnoreCase("h")) {
+			view.printHits(model.getUser());
 			model.dealCard(model.getUser());
 			view.printPlayerHand(model.getUser(), true);
 			if (model.isBusted(model.getUser())) {
@@ -113,12 +129,12 @@ public class BlackjackController {
 			}
 		}
 		else if (input.equalsIgnoreCase("s")) {
+			view.printStands(model.getUser());
 			gameStatus = Constants.DEALER_TURN;
 		}
 		else {
 			view.printErrorMessage();
 		}
-		
 	}
 	
 	private void gameOver() {

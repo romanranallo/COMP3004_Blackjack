@@ -194,7 +194,15 @@ public class BlackjackTest {
 		assertEquals(blackjack.getWinner(), blackjack.getDealer());
 	}
 	
-	
-
+	@Test
+	public void testFileInput() {
+		String file = "SK SQ SJ S8 S";
+		blackjack = new FileBlackjackGame(file.split(" "));
+		
+		blackjack.initialDeal();
+		assertEquals(2, blackjack.getUser().getHand().size());
+		assertEquals(2, blackjack.getDealer().getHand().size());
+		assertTrue("h".equalsIgnoreCase(((FileBlackjackGame)blackjack).getHitOrStand()));
+	}
 	
 }

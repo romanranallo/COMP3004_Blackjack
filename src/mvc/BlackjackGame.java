@@ -129,7 +129,7 @@ public abstract class BlackjackGame {
 	}
 	
 	public boolean dealerShouldHit() {
-		if (dealer.getScore() < 16 || dealerHasSoft17()) return true;
+		if (dealer.getScore() <= 16 || dealerHasSoft17()) return true;
 		return false;
 	}
 	

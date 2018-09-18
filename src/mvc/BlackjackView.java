@@ -51,7 +51,36 @@ public class BlackjackView {
 		}
 	}
 	
+	public void printHits(Player p) {
+		System.out.println(p + " hits. ");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void printStands(Player p) {
+		System.out.println(p + " stands. ");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void printBusted(Player p) {
 		System.out.print(p + " busts. ");
+	}
+	
+	public String promptUserForFile() {
+		String filename;
+		
+		System.out.println("Please enter the full path of the file: ");
+		filename = new Scanner(System.in).nextLine();
+		
+		return filename;
 	}
 }
