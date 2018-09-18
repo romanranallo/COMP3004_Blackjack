@@ -148,4 +148,13 @@ public abstract class BlackjackGame {
 		if (dealer.getScore() < user.getScore()) setWinner(user);
 		else setWinner(dealer);
 	}
+	
+	public boolean canSplit(Player p) {
+		if (p.getHand().size() != 2) return false;
+		
+		if (p.getHand().get(0).isEquivalent(p.getHand().get(1))) {
+			return true;
+		}
+		return false;
+	}
 }

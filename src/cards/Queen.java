@@ -10,5 +10,10 @@ public class Queen extends FaceCard {
 	public String toString() {
 		return ("Queen of " + this.getSuitName());
 	}
+	
+	@Override
+	public boolean isEquivalent(Card c) {
+		return (c instanceof Queen);
+	}
 
 }

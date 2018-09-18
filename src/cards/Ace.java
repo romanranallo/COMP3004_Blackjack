@@ -14,4 +14,9 @@ public class Ace extends Card {
 	public String toString() {
 		return ("Ace of " + this.getSuitName());
 	}
+	
+	@Override
+	public boolean isEquivalent(Card c) {
+		return (c instanceof Ace);
+	}
 }

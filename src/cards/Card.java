@@ -54,6 +54,10 @@ public class Card {
 		}
 	}
 	
+	public boolean isEquivalent(Card c) {
+		if (c instanceof King || c instanceof Queen || c instanceof Jack) return false;
+		return (this.value == c.getValue());
+	}
 	
 	@Override
 	public boolean equals(Object o) {
