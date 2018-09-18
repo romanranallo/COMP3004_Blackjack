@@ -10,32 +10,32 @@ public class Deck {
 	 */
 	public Deck() {
 
-		deck.add(new Ace("SA"));
-		deck.add(new Ace("CA"));
-		deck.add(new Ace("HA"));
-		deck.add(new Ace("DA"));
+		deck.add(Card.builder("SA"));
+		deck.add(Card.builder("CA"));
+		deck.add(Card.builder("HA"));
+		deck.add(Card.builder("DA"));
 		
 		for (int i = 2; i <= 10; i++) {
-			deck.add(new Card("S" + i));
-			deck.add(new Card("C" + i));
-			deck.add(new Card("H" + i));
-			deck.add(new Card("D" + i));
+			deck.add(Card.builder("S" + i));
+			deck.add(Card.builder("C" + i));
+			deck.add(Card.builder("H" + i));
+			deck.add(Card.builder("D" + i));
 		}
 		
-		deck.add(new Card("SK"));
-		deck.add(new Card("CK"));
-		deck.add(new Card("HK"));
-		deck.add(new Card("DK"));
+		deck.add(Card.builder("SK"));
+		deck.add(Card.builder("CK"));
+		deck.add(Card.builder("HK"));
+		deck.add(Card.builder("DK"));
 
-		deck.add(new Card("SQ"));
-		deck.add(new Card("CQ"));
-		deck.add(new Card("HQ"));
-		deck.add(new Card("DQ"));
+		deck.add(Card.builder("SQ"));
+		deck.add(Card.builder("CQ"));
+		deck.add(Card.builder("HQ"));
+		deck.add(Card.builder("DQ"));
 		
-		deck.add(new Card("SJ"));
-		deck.add(new Card("CJ"));
-		deck.add(new Card("HJ"));
-		deck.add(new Card("DJ"));
+		deck.add(Card.builder("SJ"));
+		deck.add(Card.builder("CJ"));
+		deck.add(Card.builder("HJ"));
+		deck.add(Card.builder("DJ"));
 	}
 	
 	// Shuffle the deck
@@ -55,7 +55,9 @@ public class Deck {
 		return c;
 	}
 	
-	public boolean equals(Deck d) {
+	@Override
+	public boolean equals(Object o) {
+		Deck d = (Deck)o;
 		if (d.getSize() != this.deck.size()) return false;
 		
 		for (int i = 0; i < this.deck.size(); i++) {

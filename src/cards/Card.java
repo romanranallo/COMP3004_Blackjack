@@ -6,27 +6,32 @@ public class Card {
 	protected String representation;
 	protected boolean visible;
 	
-	public Card(String representation) {
-		this.suit = representation.substring(0, 1);
-		this.representation = representation;
-		this.visible = true;
-		
-		if (representation.substring(1).equalsIgnoreCase("k") || 
-			representation.substring(1).equalsIgnoreCase("q") ||
-			representation.substring(1).equalsIgnoreCase("j")) {
-			this.value = 10;
+	public static Card builder(String representation) {
+		String suit = representation.substring(0, 1);
+		if (representation.substring(1).equalsIgnoreCase("k")) {
+			return new King(suit);
 		}
-		else if (representation.substring(1).equalsIgnoreCase("a")) {}
-		else {
-			// should be numeric if not a face card or an ace
-			this.value = Integer.parseInt(representation.substring(1));
+		else if (representation.substring(1).equalsIgnoreCase("q")) {
+			return new Queen(suit);
+		}
+		else if (representation.substring(1).equalsIgnoreCase("j")) {
+			return new Jack(suit);
+		}
+		else if (representation.substring(1).equalsIgnoreCase("a")) {
+			return new Ace(suit);
+		}
+		else {	// Should be an int
+			return new Card(suit, Integer.parseInt(representation.substring(1)));
 		}
 	}
 	
-	public Card(String representation, boolean visible) {
-		this(representation);
-		this.visible = visible;
+	public Card(String suit, int value) {
+		this.suit = suit;
+		this.visible = true;
+		this.value = value;
+		this.representation = "suit" + value;
 	}
+
 	
 	public String getSuit() { return suit; }
 	public int getValue() { return value; }
@@ -34,8 +39,30 @@ public class Card {
 	public boolean isVisible() { return this.visible; }
 	public void setVisible(boolean v) { this.visible = v; }
 	
-	public boolean equals(Card c) {
+	public String getSuitName() {
+		if (this.suit.equalsIgnoreCase("h")) {
+			return "hearts";
+		}
+		else if (this.suit.equalsIgnoreCase("c")) {
+			return "clubs";
+		}
+		else if (this.suit.equalsIgnoreCase("d")) {
+			return "diamonds";
+		}
+		else {
+			return "spades";
+		}
+	}
+	
+	
+	@Override
+	public boolean equals(Object o) {
+		Card c = (Card)o;
 		return ((this.getValue() == c.getValue()) && this.getSuit().equals(c.getSuit()));
 	}
 	
+	@Override
+	public String toString() {
+		return (value + " of " + this.getSuitName());
+	}
 }
