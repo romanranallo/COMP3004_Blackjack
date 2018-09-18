@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import cards.Card;
 
-public class Player {
+public abstract class Player {
 	
 	private ArrayList<Card> hand;
 	private int score;
