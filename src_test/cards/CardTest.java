@@ -29,15 +29,12 @@ public class CardTest {
 
 		c = new Card("SK");
 		assertTrue(c.getSuit().equals("S") && c.getValue() == 10);
-		assertTrue(c instanceof King);
 		
 		c = new Card("CQ");
 		assertTrue(c.getSuit().equals("C") && c.getValue() == 10);
-		assertTrue(c instanceof Queen);
 		
 		c = new Card("HJ");
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
-		assertTrue(c instanceof Jack);
 		
 		c = new Card("DA");
 		// Ace should default to 11
