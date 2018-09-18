@@ -6,29 +6,32 @@ import static org.junit.Assert.*;
 public class CardTest {
 	
 	@Test
-	public void testCtr() {
+	public void testBuilder() {
 		
-		Card c = new Card("H2");
+		Card c = Card.builder("H2");
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 2);
 		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
 		
-		c = new Card("SK");
+		c = Card.builder("SK");
 		assertTrue(c.getSuit().equals("S") && c.getValue() == 10);
 		assertTrue(c.getSuitName().equalsIgnoreCase("spades"));
+		assertTrue(c instanceof King);
 		
-		c = new Card("CQ");
+		c = Card.builder("CQ");
 		assertTrue(c.getSuit().equals("C") && c.getValue() == 10);
 		assertTrue(c.getSuitName().equalsIgnoreCase("clubs"));
+		assertTrue(c instanceof Queen);
 		
-		c = new Card("HJ");
+		c = Card.builder("HJ");
+		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
+		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
+		assertTrue(c instanceof Jack);
+		
+		c = Card.builder("H10");
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
 		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
 		
-		c = new Card("H10");
-		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
-		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
-		
-		c = new Ace("DA");
+		c = Card.builder("DA");
 		// Ace should default to 11
 		assertTrue(c.getSuit().equals("D") && c.getValue() == 11);
 		assertTrue(c instanceof Ace);
@@ -37,18 +40,10 @@ public class CardTest {
 	
 	@Test
 	public void testVisibility() {
-		Card c = new Ace("SA");
-		assertTrue(c.isVisible());
-		
-		c = new Ace("DA", true);
+		Card c = Card.builder("SA");
 		assertTrue(c.isVisible());
 		c.setVisible(false);
 		assertFalse(c.isVisible());
-		
-		c = new Card("HJ", false);
-		assertFalse(c.isVisible());
-		c.setVisible(true);
-		assertTrue(c.isVisible());
 		
 	}
 

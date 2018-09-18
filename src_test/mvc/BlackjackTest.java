@@ -54,9 +54,9 @@ public class BlackjackTest {
 	@Test
 	public void testBust() {
 		blackjack = new ConsoleBlackjackGame();
-		blackjack.getUser().addCard(new Card("SK"));
-		blackjack.getUser().addCard(new Card("SQ"));
-		blackjack.getUser().addCard(new Card("SJ"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		blackjack.getUser().addCard(Card.builder("SQ"));
+		blackjack.getUser().addCard(Card.builder("SJ"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(30, blackjack.getUser().getScore());
 		assertTrue(blackjack.isBusted(blackjack.getUser()));
@@ -67,15 +67,15 @@ public class BlackjackTest {
 	public void testAceLogic() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getUser().addCard(new Ace("SA"));
+		blackjack.getUser().addCard(Card.builder("SA"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(blackjack.getUser().getScore(), 11);
 		
-		blackjack.getUser().addCard(new Ace("HA"));
+		blackjack.getUser().addCard(Card.builder("HA"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(blackjack.getUser().getScore(), 12);
 		
-		blackjack.getUser().addCard(new Card("DJ"));
+		blackjack.getUser().addCard(Card.builder("DJ"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(blackjack.getUser().getScore(), 12);
 	}
@@ -85,8 +85,8 @@ public class BlackjackTest {
 	public void testPlayerBlackjack() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getUser().addCard(new Card("SK"));
-		blackjack.getUser().addCard(new Ace("SA"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		blackjack.getUser().addCard(Card.builder("SA"));
 		blackjack.updateScore(blackjack.getUser());
 		
 		assertTrue(blackjack.isBlackjack());
@@ -97,12 +97,12 @@ public class BlackjackTest {
 	public void testDealerBlackjack() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getUser().addCard(new Card("SK"));
-		blackjack.getUser().addCard(new Ace("SA"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		blackjack.getUser().addCard(Card.builder("SA"));
 		blackjack.updateScore(blackjack.getUser());
 		
-		blackjack.getDealer().addCard(new Card("SQ"));
-		blackjack.getDealer().addCard(new Ace("DA"));
+		blackjack.getDealer().addCard(Card.builder("SQ"));
+		blackjack.getDealer().addCard(Card.builder("DA"));
 		blackjack.updateScore(blackjack.getDealer());
 		
 		assertTrue(blackjack.isBlackjack());
@@ -114,21 +114,21 @@ public class BlackjackTest {
 	public void testDealerLogic() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getDealer().addCard(new Card("S2"));
-		blackjack.getDealer().addCard(new Card("D4"));
+		blackjack.getDealer().addCard(Card.builder("S2"));
+		blackjack.getDealer().addCard(Card.builder("D4"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertTrue(blackjack.dealerShouldHit());
 		
-		blackjack.getDealer().addCard(new Ace("SA"));
+		blackjack.getDealer().addCard(Card.builder("SA"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertTrue(blackjack.dealerHasSoft17());
 		assertTrue(blackjack.dealerShouldHit());
 		
-		blackjack.getDealer().addCard(new Card("SK"));
+		blackjack.getDealer().addCard(Card.builder("SK"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertFalse(blackjack.dealerShouldHit());
 
-		blackjack.getDealer().addCard(new Card("DK"));
+		blackjack.getDealer().addCard(Card.builder("DK"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertFalse(blackjack.dealerShouldHit());
 		blackjack.endDealerTurn();
@@ -144,13 +144,13 @@ public class BlackjackTest {
 	public void testPlayerHigherScore() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getUser().addCard(new Card("SK"));
-		blackjack.getUser().addCard(new Card("S6"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		blackjack.getUser().addCard(Card.builder("S6"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(16, blackjack.getUser().getScore());
 		
-		blackjack.getDealer().addCard(new Card("SQ"));
-		blackjack.getDealer().addCard(new Card("S5"));
+		blackjack.getDealer().addCard(Card.builder("SQ"));
+		blackjack.getDealer().addCard(Card.builder("S5"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertEquals(15, blackjack.getDealer().getScore());
 		
@@ -162,13 +162,13 @@ public class BlackjackTest {
 	public void testDealerHigherScore() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getUser().addCard(new Card("SK"));
-		blackjack.getUser().addCard(new Card("S4"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		blackjack.getUser().addCard(Card.builder("S4"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(14, blackjack.getUser().getScore());
 		
-		blackjack.getDealer().addCard(new Card("SQ"));
-		blackjack.getDealer().addCard(new Card("S5"));
+		blackjack.getDealer().addCard(Card.builder("SQ"));
+		blackjack.getDealer().addCard(Card.builder("S5"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertEquals(15, blackjack.getDealer().getScore());
 		
@@ -180,13 +180,13 @@ public class BlackjackTest {
 	public void testDealerWinsWhenTied() {
 		blackjack = new ConsoleBlackjackGame();
 		
-		blackjack.getUser().addCard(new Card("SK"));
-		blackjack.getUser().addCard(new Card("D5"));
+		blackjack.getUser().addCard(Card.builder("SK"));
+		blackjack.getUser().addCard(Card.builder("D5"));
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(15, blackjack.getUser().getScore());
 		
-		blackjack.getDealer().addCard(new Card("SQ"));
-		blackjack.getDealer().addCard(new Card("S5"));
+		blackjack.getDealer().addCard(Card.builder("SQ"));
+		blackjack.getDealer().addCard(Card.builder("S5"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertEquals(15, blackjack.getUser().getScore());
 		
