@@ -14,12 +14,6 @@ public class BlackjackControllerTest {
 		assertTrue(controller.getModel() instanceof ConsoleBlackjackGame);
 	}
 	
-	@Test
-	public void testUserInputWithFile() {
-		BlackjackController controller = new BlackjackController(true);
-		controller.setInputType("f");
-		assertTrue(controller.getModel() instanceof FileBlackjackGame);
-	}
 	
 	@Test
 	public void testUserInputWithBadInput() {
