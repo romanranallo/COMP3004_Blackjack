@@ -25,7 +25,7 @@ public class BlackjackControllerTest {
 		controller.setInputType("fdkfhsfdj");
 		assertNull(controller.getModel());
 	}
-
+	
 	@Test
 	public void testUserInputHit() {
 		BlackjackController controller = new BlackjackController();
@@ -55,5 +55,5 @@ public class BlackjackControllerTest {
 		assertEquals(controller.getGameStatus(), Constants.PLAYER_TURN);
 	}
 	
-
+	
 }
