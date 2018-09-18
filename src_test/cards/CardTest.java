@@ -10,23 +10,29 @@ public class CardTest {
 		
 		Card c = new Card("H2");
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 2);
+		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
 		
 		c = new Card("SK");
 		assertTrue(c.getSuit().equals("S") && c.getValue() == 10);
+		assertTrue(c.getSuitName().equalsIgnoreCase("spades"));
 		
 		c = new Card("CQ");
 		assertTrue(c.getSuit().equals("C") && c.getValue() == 10);
+		assertTrue(c.getSuitName().equalsIgnoreCase("clubs"));
 		
 		c = new Card("HJ");
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
+		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
 		
 		c = new Card("H10");
 		assertTrue(c.getSuit().equals("H") && c.getValue() == 10);
+		assertTrue(c.getSuitName().equalsIgnoreCase("Hearts"));
 		
 		c = new Ace("DA");
 		// Ace should default to 11
 		assertTrue(c.getSuit().equals("D") && c.getValue() == 11);
 		assertTrue(c instanceof Ace);
+		assertTrue(c.getSuitName().equalsIgnoreCase("diamonds"));
 	}
 	
 	@Test
