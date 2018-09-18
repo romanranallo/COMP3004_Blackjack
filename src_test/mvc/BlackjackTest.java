@@ -152,7 +152,7 @@ public class BlackjackTest {
 		blackjack.getDealer().addCard(new Card("SQ"));
 		blackjack.getDealer().addCard(new Card("S5"));
 		blackjack.updateScore(blackjack.getDealer());
-		assertEquals(15, blackjack.getUser().getScore());
+		assertEquals(15, blackjack.getDealer().getScore());
 		
 		blackjack.endDealerTurn();
 		assertEquals(blackjack.getWinner(), blackjack.getUser());
@@ -170,7 +170,7 @@ public class BlackjackTest {
 		blackjack.getDealer().addCard(new Card("SQ"));
 		blackjack.getDealer().addCard(new Card("S5"));
 		blackjack.updateScore(blackjack.getDealer());
-		assertEquals(15, blackjack.getUser().getScore());
+		assertEquals(15, blackjack.getDealer().getScore());
 		
 		blackjack.endDealerTurn();
 		assertEquals(blackjack.getWinner(), blackjack.getDealer());
