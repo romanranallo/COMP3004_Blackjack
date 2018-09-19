@@ -196,7 +196,7 @@ public class BlackjackTest {
 		blackjack.initialDeal();
 		assertEquals(2, blackjack.getUser().getHand().size());
 		assertEquals(2, blackjack.getDealer().getHand().size());
-		assertTrue("s".equalsIgnoreCase(((FileBlackjackGame)blackjack).getHitOrStand()));
+		assertTrue("s".equalsIgnoreCase(((FileBlackjackGame)blackjack).getHitOrStandOrSplit()));
 	}
 	
 	@Test
@@ -238,9 +238,6 @@ public class BlackjackTest {
 		assertEquals(1, blackjack.getUser().getHand(1).size());
 		assertEquals(11, blackjack.getUser().getScore());
 		
-		blackjack.dealAfterSplit(blackjack.getUser());
-		assertEquals(2, blackjack.getUser().getHand(0).size());
-		assertEquals(2, blackjack.getUser().getHand(1).size());
 	}
 	
 	
