@@ -153,6 +153,7 @@ public abstract class BlackjackGame {
 		if (p.getHand().size() != 2) return false;
 		
 		if (p.getHand().get(0).isEquivalent(p.getHand().get(1))) {
+			if (p instanceof Dealer) return (p.getScore() < 17);
 			return true;
 		}
 		return false;
