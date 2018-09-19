@@ -200,7 +200,7 @@ public class BlackjackTest {
 	}
 	
 	@Test
-	public void testSplit() {
+	public void testCanSplit() {
 		blackjack = new ConsoleBlackjackGame();
 		blackjack.getUser().addCard(Card.builder("DA"));
 		blackjack.getUser().addCard(Card.builder("SA"));
@@ -222,6 +222,20 @@ public class BlackjackTest {
 		blackjack.getDealer().addCard(Card.builder("H6"));
 		blackjack.updateScore(blackjack.getDealer());
 		assertTrue(blackjack.canSplit(blackjack.getDealer()));
+		
+	}
+	
+	@Test
+	public void testSplit() {
+		blackjack = new ConsoleBlackjackGame();
+		blackjack.getUser().addCard(Card.builder("DA"));
+		blackjack.getUser().addCard(Card.builder("SA"));
+		blackjack.updateScore(blackjack.getUser());
+		blackjack.split(blackjack.getUser());
+		assertEquals(2, blackjack.getUser().getHands().size());
+		assertEquals(1, blackjack.getUser().getHand(0).size());
+		assertEquals(1, blackjack.getUser().getHand(1).size());
+		
 		
 	}
 	
