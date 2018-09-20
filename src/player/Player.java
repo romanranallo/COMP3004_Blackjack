@@ -25,5 +25,19 @@ public abstract class Player {
 	public void addHand(Card c) { hands.add(new Hand(c)); }
 	public int getScore() { return currentHand.getScore(); }
 	public void setScore(int s) { currentHand.setScore(s); }
+	public Hand getCurrentHand() { return this.currentHand; }
+	public boolean isBusted() { return currentHand.isBusted(); }
+	public void setBusted(boolean b) { currentHand.setBusted(b); }
+	
+	public int getBestScore() {
+		int highScore = 0;
+		for (Hand h: hands) {
+			if (h.isBusted()) continue;
+			if (h.getScore() > highScore) {
+				highScore = h.getScore();
+			}
+		}
+		return highScore;
+	}
 	
 }

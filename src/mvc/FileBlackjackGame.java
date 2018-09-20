@@ -19,13 +19,6 @@ public class FileBlackjackGame extends BlackjackGame {
 		user.addCard(Card.builder(userFile[index++]));
 		updateScore(user);
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		dealer.addCard(Card.builder(userFile[index++]));
 		Card lastDealerCard = Card.builder(userFile[index++]);
 		lastDealerCard.setVisible(false);
@@ -38,15 +31,10 @@ public class FileBlackjackGame extends BlackjackGame {
 		updateScore(p);
 	}
 	
-	public String getHitOrStand() {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public String getHitOrStandOrSplit() {	
 		return userFile[index++];
 	}
+	
+	
 
 }

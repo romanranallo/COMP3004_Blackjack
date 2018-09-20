@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cards.Ace;
 import cards.Card;
+import cards.Hand;
 import player.*;
 
 public abstract class BlackjackGame {
@@ -32,26 +33,55 @@ public abstract class BlackjackGame {
 	public abstract void dealCard(Player p);
 	
 	public void dealerTurn() {
+		boolean split = false;
+		int handIndex = 0;
+		
 		for (Card c: dealer.getHand()) {
 			c.setVisible(true);
 		}
-		view.printPlayerHand(dealer, true);
-		
-		while (dealerShouldHit()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if (canSplit(dealer)) {
+			view.printDealerCanSplit();
+			split(dealer);
+			split = true;
+		}
+		for (Hand h: dealer.getHands()) {
+			handIndex = dealer.getHands().indexOf(h);
+			dealer.setHand(h);
+			if (split) {
+				dealCard(dealer);
+				view.printHandNumber(handIndex);
 			}
-			dealCard(dealer);
-			updateScore(dealer);
 			view.printPlayerHand(dealer, true);
-			if (isBusted(dealer)) {
-				view.printBusted(dealer);
-				setWinner(user);
-				return;
+			
+			while (dealerShouldHit()) {
+				if (split) view.printHandNumber(handIndex);
+				view.printHits(dealer);
+				dealCard(dealer);
+				updateScore(dealer);
+				if (split) view.printHandNumber(handIndex);
+				view.printPlayerHand(dealer, true);
+				if (isBusted(dealer)) {
+					if (split) view.printHandNumber(handIndex);
+					view.printBusted(dealer);
+					dealer.setBusted(true);
+					if (!split) {
+						setWinner(user);
+						return;
+					}
+
+				}
 			}
+			if (split && !dealer.isBusted()) view.printHandNumber(handIndex);
+			if (!dealer.isBusted()) view.printStands(dealer);
+		}
+		boolean bothBusted = true;
+		for (Hand h: dealer.getHands()) {
+			if (!h.isBusted()) bothBusted = false;
+		}
+		
+		if (bothBusted) {
+			setWinner(user); 
+			return;
 		}
 		endDealerTurn();
 	}
@@ -60,14 +90,8 @@ public abstract class BlackjackGame {
 	public void endPlayerTurn() {
 		this.turn = dealer;
 	}
-	public void endDealerTurn() {
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	
+	public void endDealerTurn() {		
 		for (Card c: dealer.getHand()) c.setVisible(true);
 		determineWinner();
 	}
@@ -117,12 +141,7 @@ public abstract class BlackjackGame {
 	
 	public boolean isBusted(Player p) {
 		if (p.getScore() > 21) {
-			if (p.equals(dealer)) { 
-				setWinner(user);
-			}
-			else {
-				setWinner(dealer);
-			}
+			p.setBusted(true);
 			return true;
 		}
 		return false;
@@ -135,7 +154,6 @@ public abstract class BlackjackGame {
 	
 	public boolean dealerHasSoft17() {
 		if (dealer.getScore() != 17) return false;
-		ArrayList<Ace> aces = new ArrayList<Ace>();
 		for (Card c: dealer.getHand()) {
 			if (c instanceof Ace && c.getValue() == 11) return true;
 		}
@@ -145,7 +163,7 @@ public abstract class BlackjackGame {
 	}
 	
 	private void determineWinner() {
-		if (dealer.getScore() < user.getScore()) setWinner(user);
+		if (dealer.getBestScore() < user.getBestScore()) setWinner(user);
 		else setWinner(dealer);
 	}
 	
@@ -158,4 +176,23 @@ public abstract class BlackjackGame {
 		}
 		return false;
 	}
+	
+	public void split(Player p) {
+		p.addHand(p.getHand().remove(1));
+		updateScore(p);
+		switchHand(p);
+		updateScore(p);
+		switchHand(p);
+	}
+	
+	public void switchHand(Player p) {
+		if (p.getHands().size() != 2) return;
+		
+		if ((p.getHand(0)).equals(p.getCurrentHand())) {
+			p.setHand(p.getHand(1));;
+		}
+		else p.setHand(p.getHand(0));
+	}
+	
+	
 }

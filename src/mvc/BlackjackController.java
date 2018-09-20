@@ -38,9 +38,12 @@ public class BlackjackController {
 			startGame();
 			break;
 		case (Constants.PLAYER_TURN):
+		case (Constants.PLAYER_DECIDE_SPLIT):
+			view.printPlayerTurn();
 			playerTurn();
 			break;
 		case (Constants.DEALER_TURN):
+			view.printDealerTurn();
 			dealerTurn();
 			break;
 		case (Constants.GAME_OVER):
@@ -96,17 +99,35 @@ public class BlackjackController {
 			gameStatus = Constants.GAME_OVER;
 		}
 		else {
-			gameStatus = Constants.PLAYER_TURN;
+			if (model.canSplit(model.getUser())) {
+				gameStatus = Constants.PLAYER_DECIDE_SPLIT;
+			}
+			else {
+				gameStatus = Constants.PLAYER_TURN;
+			}
 		}
 		controller();
 	}
 	
 	public void playerTurn() {
+		while (gameStatus == Constants.PLAYER_DECIDE_SPLIT) {
+			if (consoleInput) {
+				hitOrStandOrSplit(view.getPlayerDecisionWithSplit());
+			}
+			else {
+				hitOrStandOrSplit(((FileBlackjackGame)model).getHitOrStandOrSplit());
+			}
+			
+		}
+		if (gameStatus == Constants.PLAYER_SPLIT) {
+			split();
+		}
+		
 		while (gameStatus == Constants.PLAYER_TURN) {
 			if (consoleInput)
 				hitOrStand(view.getPlayerDecision());
 			else {
-				hitOrStand(((FileBlackjackGame)model).getHitOrStand());
+				hitOrStand(((FileBlackjackGame)model).getHitOrStandOrSplit());
 			}
 		}
 		model.endPlayerTurn();
@@ -119,6 +140,127 @@ public class BlackjackController {
 	}
 	
 	public void hitOrStand(String input) {
+		if (input.equalsIgnoreCase("h")) {
+			view.printHits(model.getUser());
+			model.dealCard(model.getUser());
+			view.printPlayerHand(model.getUser(), true);
+			if (model.isBusted(model.getUser())) {
+				model.setWinner(model.getDealer());
+				view.printBusted(model.getUser());
+				gameStatus = Constants.GAME_OVER;
+			}
+		}
+		else if (input.equalsIgnoreCase("s")) {
+			view.printStands(model.getUser());
+			gameStatus = Constants.DEALER_TURN;
+		}
+		else {
+			view.printErrorMessage();
+		}
+	}
+	
+	public void hitOrStandOrSplit(String input) {
+		if (input.equalsIgnoreCase("h") || input.equalsIgnoreCase("s")) {
+			gameStatus = Constants.PLAYER_TURN;
+			hitOrStand(input);
+		}
+		else if (input.equalsIgnoreCase("d")) {
+			gameStatus = Constants.PLAYER_SPLIT;
+		}
+		else {
+			view.printErrorMessage();
+		}
+	}
+	
+	
+	public void split() {
+		int handIndex = 0;
+		
+		model.split(model.getUser());
+		model.dealCard(model.getUser());
+		view.printHandNumber(handIndex);
+		view.printPlayerHand(model.getUser(), true);
+		
+		// First turn
+		boolean currentTurn = true;
+		boolean bustedFirstHand = false;
+
+		
+		while (currentTurn) {
+			String input = "";
+			if (consoleInput)
+				input = view.getPlayerDecision();
+			else
+				input = ((FileBlackjackGame)model).getHitOrStandOrSplit();
+			if (input.equalsIgnoreCase("h")) {
+				view.printHandNumber(handIndex);
+				view.printHits(model.getUser());
+				model.dealCard(model.getUser());
+				view.printHandNumber(handIndex);
+				view.printPlayerHand(model.getUser(), true);
+				if (model.isBusted(model.getUser())) {
+					view.printHandNumber(handIndex);
+					view.printBusted(model.getUser());
+					bustedFirstHand = true;
+					currentTurn = false;
+					handIndex++;
+				}
+			}
+			else if (input.equalsIgnoreCase("s")) {
+				view.printHandNumber(handIndex);
+				view.printStands(model.getUser());
+				currentTurn = false;
+				handIndex++;
+			}
+			else {
+				view.printErrorMessage();
+			}
+		}
+		
+		// Second hand
+		currentTurn = true;
+		model.switchHand(model.getUser());
+		model.dealCard(model.getUser());
+		view.printHandNumber(handIndex);
+		view.printPlayerHand(model.getUser(), true);
+		
+		while (currentTurn) {
+			String input = "";
+			if (consoleInput)
+				input = view.getPlayerDecision();
+			else
+				input = ((FileBlackjackGame)model).getHitOrStandOrSplit();
+			if (input.equalsIgnoreCase("h")) {
+				view.printHandNumber(handIndex);
+				view.printHits(model.getUser());
+				view.printHandNumber(handIndex);
+				model.dealCard(model.getUser());
+				view.printPlayerHand(model.getUser(), true);
+				if (model.isBusted(model.getUser())) {
+					view.printHandNumber(handIndex);
+					view.printBusted(model.getUser());
+					if (bustedFirstHand) {
+						model.setWinner(model.getDealer());
+						currentTurn = false;
+						gameStatus = Constants.GAME_OVER;
+					}
+
+
+				}
+			}
+			else if (input.equalsIgnoreCase("s")) {
+				view.printHandNumber(handIndex);
+				view.printStands(model.getUser());
+				currentTurn = false;
+				gameStatus = Constants.DEALER_TURN;
+			}
+			else {
+				view.printErrorMessage();
+			}
+		}
+	}
+	
+	public void hitOrStandWithSplit(String input) {
 		if (input.equalsIgnoreCase("h")) {
 			view.printHits(model.getUser());
 			model.dealCard(model.getUser());
