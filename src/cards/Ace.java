@@ -19,4 +19,7 @@ public class Ace extends Card {
 	public boolean isEquivalent(Card c) {
 		return (c instanceof Ace);
 	}
+	
+	@Override
+	public String getRepresentation() { return suit + "A"; }
 }

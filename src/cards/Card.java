@@ -29,7 +29,7 @@ public class Card {
 		this.suit = suit;
 		this.visible = true;
 		this.value = value;
-		this.representation = "suit" + value;
+		this.representation = suit + value;
 	}
 
 	

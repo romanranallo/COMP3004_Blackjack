@@ -15,4 +15,7 @@ public class King extends FaceCard {
 	public boolean isEquivalent(Card c) {
 		return (c instanceof King);
 	}
+	
+	@Override
+	public String getRepresentation() { return suit + "K"; }
 }

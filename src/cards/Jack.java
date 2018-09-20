@@ -16,4 +16,6 @@ public class Jack extends FaceCard {
 		return (c instanceof Jack);
 	}
 
+	@Override
+	public String getRepresentation() { return suit + "J"; }
 }

@@ -153,4 +153,17 @@ public class BlackjackView {
 			e.printStackTrace();
 		}
 	}
+
+	public void printFileIsBad() {
+		System.out.println("This file is not correct, sorry. Exiting");
+		
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
 }
