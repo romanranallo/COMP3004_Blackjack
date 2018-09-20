@@ -54,7 +54,6 @@ public class BlackjackTest {
 		blackjack.updateScore(blackjack.getUser());
 		assertEquals(30, blackjack.getUser().getScore());
 		assertTrue(blackjack.isBusted(blackjack.getUser()));
-		assertEquals(blackjack.getWinner(), blackjack.getDealer());
 	}
 	
 	@Test
@@ -130,7 +129,6 @@ public class BlackjackTest {
 				&& blackjack.getDealer().getHand().get(2).isVisible() && blackjack.getDealer().getHand().get(3).isVisible()
 				&& blackjack.getDealer().getHand().get(3).isVisible());
 		assertTrue(blackjack.isBusted(blackjack.getDealer()));
-		assertEquals(blackjack.getWinner(), blackjack.getUser());
 		
 	}
 	
